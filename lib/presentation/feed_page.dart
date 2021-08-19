@@ -37,8 +37,9 @@ class _FeedPageState extends State<FeedPage> {
               final feed = state.feed;
               final objects = feed.objects;
 
-              return ListView.builder(
+              return ListView.separated(
                 itemCount: objects.length,
+                separatorBuilder: (context, index) => const SizedBox(height: 3),
                 itemBuilder: (context, index) {
                   final object = objects[index];
                   return FeedTile(
@@ -77,27 +78,35 @@ class FeedTile extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      padding: EdgeInsets.all(3.0),
-      color: theme.colorScheme.onSecondary,
-      child: Row(
-        children: [
-          CachedNetworkImage(
-            placeholder: (context, url) => CircularProgressIndicator(),
-            imageUrl: imageUrl,
-          ),
-          SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(address, textAlign: TextAlign.right, style: textTheme.bodyText1),
-                Text(postcode, textAlign: TextAlign.right, style: textTheme.bodyText1),
-                Text(price, textAlign: TextAlign.right, style: textTheme.headline5),
-              ],
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed('/details'),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: EdgeInsets.all(3.0),
+        margin: EdgeInsets.all(3.0),
+        color: theme.cardColor,
+        child: Row(
+          children: [
+            CachedNetworkImage(
+              placeholder: (context, url) => CircularProgressIndicator(),
+              imageUrl: imageUrl,
             ),
-          )
-        ],
+            SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(address,
+                      textAlign: TextAlign.right, style: textTheme.bodyText1),
+                  Text(postcode,
+                      textAlign: TextAlign.right, style: textTheme.bodyText1),
+                  Text(price,
+                      textAlign: TextAlign.right, style: textTheme.headline5),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
