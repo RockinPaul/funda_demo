@@ -17,12 +17,12 @@ class FeedLoadInProgress extends FeedState {
 }
 
 class FeedLoadSuccess extends FeedState {
-  final List<FeedObject> objects;
+  final Feed feed;
 
-  const FeedLoadSuccess({required this.objects});
+  const FeedLoadSuccess({required this.feed});
 
   @override
-  List<Object?> get props => [objects];
+  List<Object?> get props => [feed];
 }
 
 class FeedLoadFailure extends FeedState {

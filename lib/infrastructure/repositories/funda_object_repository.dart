@@ -14,12 +14,10 @@ class FundaObjectRepository extends FundaObjectRepositoryBase {
     apiService = service ?? ApiService(baseUrl);
   }
 
-  Future<List<FeedObject>> fetchFeed() async {
-    var objects = <FeedObject>[];
+  Future<Feed> fetchFeed() async {
     final endpoint = '/feeds/Aanbod.svc/json/$key/?type=koop&zo=/amsterdam/';
     final rawResult = await apiService.get(endpoint: endpoint);
     print(rawResult);
-
     // Perform expensive computations in the background
     final feed = await compute(feedFromJson, rawResult);
 
@@ -33,7 +31,7 @@ class FundaObjectRepository extends FundaObjectRepositoryBase {
     print('Feed: ${feed.objects.length}');
     print('Feed: ${feed.objects[0].adres}');
 
-    return objects;
+    return feed;
   }
 
   @override

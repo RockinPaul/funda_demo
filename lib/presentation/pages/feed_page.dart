@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funda_demo/blocs/feed_cubit/feed_cubit.dart';
 
-class Feed extends StatefulWidget {
-  const Feed({Key? key}) : super(key: key);
+class FeedPage extends StatefulWidget {
+  const FeedPage({Key? key}) : super(key: key);
 
   @override
-  _FeedState createState() => _FeedState();
+  _FeedPageState createState() => _FeedPageState();
 }
 
-class _FeedState extends State<Feed> {
+class _FeedPageState extends State<FeedPage> {
   @override
   void initState() {
     super.initState();
@@ -33,12 +33,14 @@ class _FeedState extends State<Feed> {
               return Center(child: Text('${state.message}'));
             }
             if (state is FeedLoadSuccess) {
-              final objects = state.objects;
+              final feed = state.feed;
+              final objects = feed.objects;
+
               return ListView.builder(
+                itemCount: objects.length,
                 itemBuilder: (context, index) {
                   final object = objects[index];
-
-                  return ListTile();
+                  return ListTile(title: Text('${object.foto}'),);
                 },
               );
             }
@@ -47,5 +49,14 @@ class _FeedState extends State<Feed> {
         ),
       ),
     );
+  }
+}
+
+class FeedTile extends StatelessWidget {
+  const FeedTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
             lazy: false,
           )
         ],
-        child: Feed(),
+        child: FeedPage(),
       ),
     );
   }
