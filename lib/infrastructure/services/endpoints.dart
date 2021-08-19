@@ -1,0 +1,1 @@
+const baseUrl = 'http://partnerapi.funda.nl';
