@@ -10,16 +10,15 @@ Details detailsFromJson(dynamic json) => _$DetailsFromJson(json);
 
 @JsonSerializable(fieldRename: FieldRename.pascal, explicitToJson: true)
 class Details {
-  // Detail attributes
   final String? volledigeOmschrijving;
 
-  // @JsonKey(defaultValue: const [])
-  // final List<Media>? media;
+  @JsonKey(defaultValue: const [])
+  final List<Media> media;
 
-  Details({
+  Details(
     this.volledigeOmschrijving,
-    // this.media,
-  });
+    this.media,
+  );
 
   factory Details.fromJson(Map<String, dynamic> json) =>
       _$DetailsFromJson(json);

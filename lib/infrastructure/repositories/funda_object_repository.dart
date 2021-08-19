@@ -44,6 +44,7 @@ class FundaObjectRepository extends FundaObjectRepositoryBase {
     final result = await compute(detailsFromJson, rawResult);
 
     print('Details: ${result.volledigeOmschrijving}');
+    print('Media items: ${result.media.map((e) => e.contentType)}');
 
     return object;
   }
