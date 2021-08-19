@@ -14,7 +14,6 @@ class DetailsCubit extends Cubit<DetailsState> {
   }
 
   Future<void> retrieve({required FeedObject object}) async {
-    print('Call');
     try {
       emit(DetailsLoadInProgress());
       final result = await _repository.retrieveDetails(object);

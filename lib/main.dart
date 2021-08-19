@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funda_demo/presentation/feed_page.dart';
 import 'package:funda_demo/infrastructure/services/service_bundle.dart';
 import 'package:funda_demo/theme.dart';
-import 'package:funda_demo/routes.dart';
+import 'package:funda_demo/router.dart';
 
 import 'blocs/details_cubit/details_cubit.dart';
 import 'blocs/feed_cubit/feed_cubit.dart';
@@ -20,10 +20,10 @@ void main() async {
   runZonedGuarded(() {
     WidgetsFlutterBinding.ensureInitialized();
 
-    final apiService = ApiService(baseUrl);
-    final FundaObjectRepository repository = FundaObjectRepository(
-      service: apiService,
-    );
+    // final apiService = ApiService(baseUrl);
+    // final FundaObjectRepository repository = FundaObjectRepository(
+    //   service: apiService,
+    // );
     FlutterError.onError = (FlutterErrorDetails details) {
       if (kReleaseMode) {
         // In Release mode, report to the application zone for logging into
@@ -34,37 +34,25 @@ void main() async {
         FlutterError.dumpErrorToConsole(details);
       }
     };
-    runApp(MyApp(repository: repository));
+    runApp(MyApp());
   }, (Object error, StackTrace stack) {
     reportError(error, stack);
   });
 }
 
 class MyApp extends StatelessWidget {
-  final FundaObjectRepository repository;
-
-  const MyApp({Key? key, required this.repository}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _router = AppRouter();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: buildReplyDarkTheme(context),
-      initialRoute: Routes.root,
-      onGenerateRoute: (settings) => Routes.onGenerateRoute(settings.name),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<FeedCubit>(
-            create: (_) => FeedCubit(repository: repository),
-            lazy: false,
-          ),
-          BlocProvider<DetailsCubit>(
-            create: (_) => DetailsCubit(repository: repository),
-            lazy: false,
-          )
-        ],
-        child: FeedPage(),
-      ),
+      // initialRoute: AppRouter.root,
+      onGenerateRoute: (settings) => _router.onGenerateRoute(settings.name),
+      // home: FeedPage(),
     );
   }
 }

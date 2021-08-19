@@ -13,6 +13,7 @@ class DetailsPage extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<DetailsCubit, DetailsState>(
           builder: (context, state) {
+
             return Column(
               children: [
                 // CachedNetworkImage(

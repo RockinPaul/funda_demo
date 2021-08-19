@@ -4,6 +4,7 @@ import 'package:funda_demo/blocs/details_cubit/details_cubit.dart';
 import 'package:funda_demo/blocs/feed_cubit/feed_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:funda_demo/domain/models/feed_object.dart';
+import 'package:funda_demo/presentation/details_page.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -75,8 +76,9 @@ class FeedTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.read<DetailsCubit>().retrieve(object: item);
-        // Navigator.of(context).pushNamed('/details');
+        Navigator.of(context).pushNamed('/details');
+
+        // context.read<DetailsCubit>().retrieve(object: item);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
