@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:funda_demo/domain/models/details.dart';
 import 'package:funda_demo/infrastructure/models/funda_dto.dart';
 import 'package:funda_demo/domain/models/feed_object.dart';
 import 'package:funda_demo/domain/models/feed.dart';
@@ -35,8 +36,15 @@ class FundaObjectRepository extends FundaObjectRepositoryBase {
   }
 
   @override
-  FeedObject retrieveDetails(FeedObject object) {
-    // TODO: implement retrieveObject
-    throw UnimplementedError();
+  Future<FeedObject> retrieveDetails(FeedObject object) async {
+    final endpoint = '/feeds/Aanbod.svc/json/detail/$key/koop/${object.id}/';
+    final rawResult = await apiService.get(endpoint: endpoint);
+    print(rawResult);
+
+    final result = await compute(detailsFromJson, rawResult);
+
+    print('Details: ${result.volledigeOmschrijving}');
+
+    return object;
   }
 }

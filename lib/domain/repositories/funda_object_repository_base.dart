@@ -4,5 +4,5 @@ import '../models/feed_object.dart';
 
 abstract class FundaObjectRepositoryBase {
   Future<Feed> fetchFeed();
-  FeedObject retrieveDetails(FeedObject object);
+  Future<FeedObject> retrieveDetails(FeedObject object);
 }

@@ -3,6 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'feed_object.g.dart';
 
+// The top-level function allows us to move parsing and conversion
+// to a background isolate via the compute() function:
+// https://api.flutter.dev/flutter/foundation/compute-constant.html
+FeedObject feedObjectFromJson(dynamic json) => _$FeedObjectFromJson(json);
+
 @JsonSerializable(fieldRename: FieldRename.pascal, explicitToJson: true)
 class FeedObject {
   final String? aangebodenSindsTekst;
@@ -55,10 +60,10 @@ class FeedObject {
   // Detail attributes
   final String? volledigeOmschrijving;
 
-  @JsonKey(defaultValue: const [])
-  final List<Media> media;
+  // @JsonKey(defaultValue: const [])
+  // final List<Media>? media;
 
-  FeedObject(
+  FeedObject({
     this.aangebodenSindsTekst,
     this.aanmeldDatum,
     this.aantalBeschikbaar,
@@ -106,8 +111,8 @@ class FeedObject {
     this.makelaarNaam,
     this.postcode,
     this.volledigeOmschrijving,
-    this.media,
-  );
+    // this.media,
+  });
 
   factory FeedObject.fromJson(Map<String, dynamic> json) =>
       _$FeedObjectFromJson(json);

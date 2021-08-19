@@ -14,7 +14,7 @@ class FeedCubit extends Cubit<FeedState> {
     _repository = repository ?? FundaObjectRepository();
   }
 
-  void fetch() async {
+  Future<void> fetch() async {
     try {
       emit(FeedLoadInProgress());
       final feed = await _repository.fetchFeed();

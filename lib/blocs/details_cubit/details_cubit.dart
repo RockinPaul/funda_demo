@@ -13,5 +13,14 @@ class DetailsCubit extends Cubit<DetailsState> {
     _repository = repository ?? FundaObjectRepository();
   }
 
-  void retrieveDetails() {}
+  Future<void> retrieve({required FeedObject object}) async {
+    print('Call');
+    try {
+      emit(DetailsLoadInProgress());
+      final result = await _repository.retrieveDetails(object);
+      emit(DetailsLoadSuccess(object: result));
+    } catch (e) {
+      emit(DetailsLoadFailure(message: 'Details loading failed!'));
+    }
+  }
 }

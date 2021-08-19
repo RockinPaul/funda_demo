@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:funda_demo/blocs/details_cubit/details_cubit.dart';
 import 'package:funda_demo/blocs/feed_cubit/feed_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:funda_demo/domain/models/feed_object.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -42,12 +44,7 @@ class _FeedPageState extends State<FeedPage> {
                 separatorBuilder: (context, index) => const SizedBox(height: 3),
                 itemBuilder: (context, index) {
                   final object = objects[index];
-                  return FeedTile(
-                    imageUrl: object.foto ?? '',
-                    address: object.adres ?? '',
-                    postcode: object.postcode ?? '',
-                    price: object.koopprijs.toString(),
-                  );
+                  return FeedTile(item: object);
                 },
               );
             }
@@ -60,26 +57,27 @@ class _FeedPageState extends State<FeedPage> {
 }
 
 class FeedTile extends StatelessWidget {
-  final String imageUrl;
-  final String address;
-  final String postcode;
-  final String price;
+  final FeedObject item;
 
   const FeedTile({
     Key? key,
-    required this.imageUrl,
-    required this.address,
-    required this.postcode,
-    required this.price,
+    required this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
+    final imageUrl = item.foto ?? '';
+    final address = item.adres ?? '';
+    final postcode = item.postcode ?? '';
+    final price = item.koopprijs.toString();
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed('/details'),
+      onTap: () {
+        context.read<DetailsCubit>().retrieve(object: item);
+        // Navigator.of(context).pushNamed('/details');
+      },
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: EdgeInsets.all(3.0),
