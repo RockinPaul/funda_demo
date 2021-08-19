@@ -53,6 +53,11 @@ FeedObject _$FeedObjectFromJson(Map<String, dynamic> json) => FeedObject(
       json['MakelaarId'] as int?,
       json['MakelaarNaam'] as String?,
       json['Postcode'] as String?,
+      json['VolledigeOmschrijving'] as String?,
+      (json['Media'] as List<dynamic>?)
+              ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$FeedObjectToJson(FeedObject instance) =>
@@ -103,4 +108,6 @@ Map<String, dynamic> _$FeedObjectToJson(FeedObject instance) =>
       'MakelaarId': instance.makelaarId,
       'MakelaarNaam': instance.makelaarNaam,
       'Postcode': instance.postcode,
+      'VolledigeOmschrijving': instance.volledigeOmschrijving,
+      'Media': instance.media.map((e) => e.toJson()).toList(),
     };
