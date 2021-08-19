@@ -47,9 +47,6 @@ class _FeedPageState extends State<FeedPage> {
                     postcode: object.postcode ?? '',
                     price: object.koopprijs.toString(),
                   );
-                  return ListTile(
-                    title: Text('${object.foto}'),
-                  );
                 },
               );
             }
@@ -77,8 +74,12 @@ class FeedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: EdgeInsets.all(3.0),
+      color: theme.colorScheme.onSecondary,
       child: Row(
         children: [
           CachedNetworkImage(
@@ -86,12 +87,15 @@ class FeedTile extends StatelessWidget {
             imageUrl: imageUrl,
           ),
           SizedBox(width: 15),
-          Column(
-            children: [
-              Text(address),
-              Text(price),
-              Text(postcode),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(address, textAlign: TextAlign.right, style: textTheme.bodyText1),
+                Text(postcode, textAlign: TextAlign.right, style: textTheme.bodyText1),
+                Text(price, textAlign: TextAlign.right, style: textTheme.headline5),
+              ],
+            ),
           )
         ],
       ),
