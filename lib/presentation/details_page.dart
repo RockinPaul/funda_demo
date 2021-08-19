@@ -8,20 +8,34 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(title: Text('Feed')),
       body: SafeArea(
         child: BlocBuilder<DetailsCubit, DetailsState>(
           builder: (context, state) {
-
-            return Column(
-              children: [
-                // CachedNetworkImage(
-                //   placeholder: (context, url) => CircularProgressIndicator(),
-                //   imageUrl: imageUrl,
-                // ),
-              ],
-            );
+            if (state is DetailsLoadInProgress) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is DetailsLoadFailure) {
+              return Center(child: Text('${state.message}'));
+            }
+            if (state is DetailsLoadSuccess) {
+              final details = state.object;
+              return Column(
+                children: [
+                  // CachedNetworkImage(
+                  //   placeholder: (context, url) => CircularProgressIndicator(),
+                  //   imageUrl: details.,
+                  // ),
+                  Text(details.volledigeOmschrijving ?? '', style: textTheme.bodyText1,),
+                ],
+              );
+            }
+            return Container();
           },
         ),
       ),

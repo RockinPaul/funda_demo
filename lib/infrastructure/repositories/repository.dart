@@ -1,17 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:funda_demo/domain/models/details.dart';
-import 'package:funda_demo/infrastructure/models/funda_dto.dart';
 import 'package:funda_demo/domain/models/feed_object.dart';
 import 'package:funda_demo/domain/models/feed.dart';
-import 'package:funda_demo/domain/repositories/funda_object_repository_base.dart';
+import 'package:funda_demo/domain/repositories/repository_base.dart';
 import 'package:funda_demo/domain/data_sources/remote_data_source_base.dart';
 import 'package:funda_demo/infrastructure/services/service_bundle.dart';
 
-class FundaObjectRepository extends FundaObjectRepositoryBase {
+class Repository extends RepositoryBase {
 
   late final RemoteDataSourceBase apiService;
 
-  FundaObjectRepository({RemoteDataSourceBase? service}) {
+  Repository({RemoteDataSourceBase? service}) {
     apiService = service ?? ApiService(baseUrl);
   }
 
@@ -36,7 +35,7 @@ class FundaObjectRepository extends FundaObjectRepositoryBase {
   }
 
   @override
-  Future<FeedObject> retrieveDetails(FeedObject object) async {
+  Future<Details> retrieveDetails(FeedObject object) async {
     final endpoint = '/feeds/Aanbod.svc/json/detail/$key/koop/${object.id}/';
     final rawResult = await apiService.get(endpoint: endpoint);
     print(rawResult);
@@ -46,6 +45,6 @@ class FundaObjectRepository extends FundaObjectRepositoryBase {
     print('Details: ${result.volledigeOmschrijving}');
     print('Media items: ${result.media.map((e) => e.contentType)}');
 
-    return object;
+    return result;
   }
 }

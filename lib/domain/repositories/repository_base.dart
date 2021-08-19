@@ -1,8 +1,9 @@
 import 'package:funda_demo/domain/models/feed.dart';
 
 import '../models/feed_object.dart';
+import '../models/details.dart';
 
-abstract class FundaObjectRepositoryBase {
+abstract class RepositoryBase {
   Future<Feed> fetchFeed();
-  Future<FeedObject> retrieveDetails(FeedObject object);
+  Future<Details> retrieveDetails(FeedObject object);
 }

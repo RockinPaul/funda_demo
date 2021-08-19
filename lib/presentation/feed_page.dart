@@ -76,9 +76,8 @@ class FeedTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        context.read<DetailsCubit>().retrieve(object: item);
         Navigator.of(context).pushNamed('/details');
-
-        // context.read<DetailsCubit>().retrieve(object: item);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(

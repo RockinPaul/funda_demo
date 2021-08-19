@@ -17,7 +17,7 @@ class DetailsLoadInProgress extends DetailsState {
 }
 
 class DetailsLoadSuccess extends DetailsState {
-  final FeedObject object;
+  final Details object;
 
   const DetailsLoadSuccess({required this.object});
 

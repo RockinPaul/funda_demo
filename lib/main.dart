@@ -10,7 +10,9 @@ import 'package:funda_demo/router.dart';
 
 import 'blocs/details_cubit/details_cubit.dart';
 import 'blocs/feed_cubit/feed_cubit.dart';
-import 'infrastructure/repositories/funda_object_repository.dart';
+import 'domain/data_sources/remote_data_source_base.dart';
+import 'domain/repositories/repository_base.dart';
+import 'infrastructure/repositories/repository.dart';
 
 void main() async {
   // The Flutter framework catches errors that occur during callbacks triggered by the framework itself,
@@ -20,10 +22,9 @@ void main() async {
   runZonedGuarded(() {
     WidgetsFlutterBinding.ensureInitialized();
 
-    // final apiService = ApiService(baseUrl);
-    // final FundaObjectRepository repository = FundaObjectRepository(
-    //   service: apiService,
-    // );
+    final _apiService = ApiService(baseUrl);
+    final _repository = Repository(service: _apiService);
+
     FlutterError.onError = (FlutterErrorDetails details) {
       if (kReleaseMode) {
         // In Release mode, report to the application zone for logging into
@@ -34,25 +35,53 @@ void main() async {
         FlutterError.dumpErrorToConsole(details);
       }
     };
-    runApp(MyApp());
+    runApp(
+      App(
+        repository: _repository,
+        remoteDataSource: _apiService,
+      ),
+    );
   }, (Object error, StackTrace stack) {
     reportError(error, stack);
   });
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatefulWidget {
+  final RepositoryBase repository;
+  final RemoteDataSourceBase remoteDataSource;
+
+  const App({
+    Key? key,
+    required this.repository,
+    required this.remoteDataSource,
+  }) : super(key: key);
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+
+  late final AppRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _router = AppRouter(repository: widget.repository);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final _router = AppRouter();
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: buildReplyDarkTheme(context),
-      // initialRoute: AppRouter.root,
       onGenerateRoute: (settings) => _router.onGenerateRoute(settings.name),
-      // home: FeedPage(),
     );
+  }
+
+  @override
+  void dispose() {
+    _router.dispose();
+    super.dispose();
   }
 }

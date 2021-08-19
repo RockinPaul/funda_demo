@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funda_demo/blocs/details_cubit/details_cubit.dart';
 import 'package:funda_demo/blocs/feed_cubit/feed_cubit.dart';
+import 'package:funda_demo/domain/repositories/repository_base.dart';
 import 'package:funda_demo/presentation/feed_page.dart';
 import 'package:funda_demo/presentation/details_page.dart';
 
-import 'infrastructure/repositories/funda_object_repository.dart';
+import 'infrastructure/repositories/repository.dart';
 import 'infrastructure/services/api_service.dart';
 import 'infrastructure/services/endpoints.dart';
 
 class AppRouter {
-  final _apiService = ApiService(baseUrl);
+
+  final RepositoryBase repository;
+
+  late final FeedCubit _feedCubit;
+  late final DetailsCubit _detailsCubit;
+
+  AppRouter({required this.repository}) {
+    _feedCubit = FeedCubit(repository: repository);
+    _detailsCubit = DetailsCubit(repository: repository);
+  }
 
   MaterialPageRoute onGenerateRoute(String? routeName) {
-    final FundaObjectRepository repository = FundaObjectRepository(
-      service: _apiService,
-    );
-
-    final _feedCubit = FeedCubit(repository: repository);
-    final _detailsCubit = DetailsCubit(repository: repository);
 
     Widget page;
     switch (routeName) {
@@ -40,5 +44,10 @@ class AppRouter {
         child: page,
       ),
     );
+  }
+
+  void dispose() {
+    _feedCubit.close();
+    _detailsCubit.close();
   }
 }
