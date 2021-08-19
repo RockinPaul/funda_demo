@@ -48,6 +48,8 @@ class FeedObject {
   final int? koopprijsTot;
   final String? land;
   final int? makelaarId;
+  final String? makelaarNaam;
+  final String? postcode;
 
   FeedObject(
     this.aangebodenSindsTekst,
@@ -94,9 +96,12 @@ class FeedObject {
     this.koopprijsTot,
     this.land,
     this.makelaarId,
+    this.makelaarNaam,
+    this.postcode,
   );
 
-  factory FeedObject.fromJson(Map<String, dynamic> json) => _$FeedObjectFromJson(json);
+  factory FeedObject.fromJson(Map<String, dynamic> json) =>
+      _$FeedObjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeedObjectToJson(this);
 }

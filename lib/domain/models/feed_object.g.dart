@@ -51,6 +51,8 @@ FeedObject _$FeedObjectFromJson(Map<String, dynamic> json) => FeedObject(
       json['KoopprijsTot'] as int?,
       json['Land'] as String?,
       json['MakelaarId'] as int?,
+      json['MakelaarNaam'] as String?,
+      json['Postcode'] as String?,
     );
 
 Map<String, dynamic> _$FeedObjectToJson(FeedObject instance) =>
@@ -99,4 +101,6 @@ Map<String, dynamic> _$FeedObjectToJson(FeedObject instance) =>
       'KoopprijsTot': instance.koopprijsTot,
       'Land': instance.land,
       'MakelaarId': instance.makelaarId,
+      'MakelaarNaam': instance.makelaarNaam,
+      'Postcode': instance.postcode,
     };
