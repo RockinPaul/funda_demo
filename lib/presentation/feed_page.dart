@@ -80,27 +80,32 @@ class FeedTile extends StatelessWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: EdgeInsets.all(3.0),
-        margin: EdgeInsets.all(3.0),
+        padding: const EdgeInsets.all(3.0),
+        margin: const EdgeInsets.all(3.0),
         color: theme.cardColor,
         child: Row(
           children: [
-            CachedNetworkImage(
-              placeholder: (context, url) => CircularProgressIndicator(),
-              imageUrl: imageUrl,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5.0, 5.0, 15.0, 5.0),
+              child: CachedNetworkImage(
+                placeholder: (context, url) => CircularProgressIndicator(),
+                imageUrl: imageUrl,
+              ),
             ),
-            SizedBox(width: 15),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(address,
-                      textAlign: TextAlign.right, style: textTheme.bodyText1),
-                  Text(postcode,
-                      textAlign: TextAlign.right, style: textTheme.bodyText1),
-                  Text(price,
-                      textAlign: TextAlign.right, style: textTheme.headline5),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(address,
+                        textAlign: TextAlign.right, style: textTheme.bodyText1),
+                    Text(postcode,
+                        textAlign: TextAlign.right, style: textTheme.bodyText1),
+                    Text(price,
+                        textAlign: TextAlign.right, style: textTheme.headline5),
+                  ],
+                ),
               ),
             )
           ],

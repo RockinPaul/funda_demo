@@ -8,9 +8,7 @@ import 'package:funda_demo/presentation/details_page.dart';
 
 /// Manage and provide the FeedCubit and DetailsCubit to the appropriate generated routes.
 class AppRouter {
-
   final RepositoryBase repository;
-
   late final FeedCubit _feedCubit;
   late final DetailsCubit _detailsCubit;
 
@@ -20,7 +18,6 @@ class AppRouter {
   }
 
   MaterialPageRoute onGenerateRoute(String? routeName) {
-
     Widget page;
     switch (routeName) {
       case '/':

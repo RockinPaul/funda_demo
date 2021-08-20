@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'media_item.dart';
 
-part '../../infrastructure/models/details_dto.g.dart';
+part 'details_dto.g.dart';
 
 // The top-level function allows us to move parsing and conversion
 // to a background isolate via the compute() function:

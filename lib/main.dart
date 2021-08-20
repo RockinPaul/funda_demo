@@ -18,7 +18,7 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     final _apiService = ApiService(baseUrl);
-    final _repository = Repository(service: _apiService);
+    final _repository = Repository(apiService: _apiService);
 
     FlutterError.onError = (FlutterErrorDetails details) {
       if (kReleaseMode) {
@@ -57,7 +57,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   late final AppRouter _router;
 
   @override
