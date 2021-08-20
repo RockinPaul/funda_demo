@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funda_demo/blocs/details_cubit/details_cubit.dart';
 import 'package:funda_demo/blocs/feed_cubit/feed_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:funda_demo/domain/models/feed_object.dart';
-import 'package:funda_demo/presentation/details_page.dart';
+import 'package:funda_demo/domain/models/feed_item.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _FeedPageState extends State<FeedPage> {
             }
             if (state is FeedLoadSuccess) {
               final feed = state.feed;
-              final objects = feed.objects;
+              final objects = feed.items;
 
               return ListView.separated(
                 itemCount: objects.length,
@@ -58,7 +57,7 @@ class _FeedPageState extends State<FeedPage> {
 }
 
 class FeedTile extends StatelessWidget {
-  final FeedObject item;
+  final FeedItem item;
 
   const FeedTile({
     Key? key,
@@ -69,10 +68,10 @@ class FeedTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
-    final imageUrl = item.foto ?? '';
-    final address = item.adres ?? '';
-    final postcode = item.postcode ?? '';
-    final price = item.koopprijs.toString();
+    final imageUrl = item.photo;
+    final address = item.address;
+    final postcode = item.postal;
+    final price = item.price;
 
     return GestureDetector(
       onTap: () {

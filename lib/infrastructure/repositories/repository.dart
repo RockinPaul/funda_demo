@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:funda_demo/domain/models/details.dart';
-import 'package:funda_demo/domain/models/feed_object.dart';
 import 'package:funda_demo/domain/models/feed.dart';
+import 'package:funda_demo/domain/models/feed_item.dart';
+import 'package:funda_demo/infrastructure/models/details_dto.dart';
+import 'package:funda_demo/infrastructure/models/feed_dto.dart';
+import 'package:funda_demo/infrastructure/models/media.dart';
+import 'package:funda_demo/infrastructure/models/media_item.dart';
 import 'package:funda_demo/domain/repositories/repository_base.dart';
 import 'package:funda_demo/domain/data_sources/remote_data_source_base.dart';
 import 'package:funda_demo/infrastructure/services/service_bundle.dart';
@@ -19,15 +23,10 @@ class Repository extends RepositoryBase {
     final rawResult = await apiService.get(endpoint: endpoint);
     print(rawResult);
     // Perform expensive computations in the background
-    final feed = await compute(feedFromJson, rawResult);
+    final feed = await compute(feedDtoFromJson, rawResult);
 
     print('Feed: $feed');
-    print('Feed: ${feed.accountStatus}');
-    print('Feed: ${feed.emailNotConfirmed}');
     print('Feed: ${feed.totaalAantalObjecten}');
-    print('Feed: ${feed.validationFailed}');
-    print('Feed: ${feed.validationReport}');
-    print('Feed: ${feed.metadata.titel}');
     print('Feed: ${feed.objects.length}');
     print('Feed: ${feed.objects[0].adres}');
 
@@ -35,12 +34,12 @@ class Repository extends RepositoryBase {
   }
 
   @override
-  Future<Details> retrieveDetails(FeedObject object) async {
-    final endpoint = '/feeds/Aanbod.svc/json/detail/$key/koop/${object.id}/';
+  Future<Details> retrieveDetails(FeedItem object) async {
+    final endpoint = '/feeds/Aanbod.svc/json/detail/$key/koop/${object.itemId}/';
     final rawResult = await apiService.get(endpoint: endpoint);
     print(rawResult);
 
-    final result = await compute(detailsFromJson, rawResult);
+    final result = await compute(detailsDtoFromJson, rawResult);
 
     print('Details: ${result.volledigeOmschrijving}');
     print('Media items: ${result.media.map((e) => e.contentType)}');

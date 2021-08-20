@@ -6,10 +6,7 @@ import 'package:funda_demo/domain/repositories/repository_base.dart';
 import 'package:funda_demo/presentation/feed_page.dart';
 import 'package:funda_demo/presentation/details_page.dart';
 
-import 'infrastructure/repositories/repository.dart';
-import 'infrastructure/services/api_service.dart';
-import 'infrastructure/services/endpoints.dart';
-
+/// Manage and provide the FeedCubit and DetailsCubit to the appropriate generated routes.
 class AppRouter {
 
   final RepositoryBase repository;

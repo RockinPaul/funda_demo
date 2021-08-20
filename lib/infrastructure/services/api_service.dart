@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:funda_demo/infrastructure/services/api_exception.dart';
 import 'package:funda_demo/domain/data_sources/remote_data_source_base.dart';
 import 'package:http/http.dart' as http;
-import 'package:funda_demo/domain/models/feed_object.dart';
-import 'package:funda_demo/infrastructure/services/endpoints.dart';
 
 // Usually, we receive this from remote data source or specify as an external config
 // (like that: https://dartcode.org/docs/using-dart-define-in-flutter/)

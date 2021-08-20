@@ -25,13 +25,14 @@ class DetailsPage extends StatelessWidget {
             }
             if (state is DetailsLoadSuccess) {
               final details = state.object;
+              final image = details.images.first;
               return Column(
                 children: [
-                  // CachedNetworkImage(
-                  //   placeholder: (context, url) => CircularProgressIndicator(),
-                  //   imageUrl: details.,
-                  // ),
-                  Text(details.volledigeOmschrijving ?? '', style: textTheme.bodyText1,),
+                  CachedNetworkImage(
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    imageUrl: image,
+                  ),
+                  Text(details.description, style: textTheme.bodyText1),
                 ],
               );
             }

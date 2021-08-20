@@ -1,4 +1,4 @@
-import 'package:funda_demo/domain/models/media_item.dart';
+import 'package:funda_demo/infrastructure/models/media_item.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'media.g.dart';
