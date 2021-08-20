@@ -41,8 +41,8 @@ class ApiService extends RemoteDataSourceBase {
       return json.decode(response.body);
     } on http.ClientException catch (e) {
       throw ApiException(
-          message:
-              'Response does not have a success status code: ${e.message}');
+        message: 'Response does not have a success status code: ${e.message}',
+      );
     } on TimeoutException catch (e) {
       throw ApiException(message: 'Response timeout: ${e.message}');
     } on Exception {

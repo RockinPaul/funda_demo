@@ -14,6 +14,7 @@ class Repository extends RepositoryBase {
 
   Repository({required this.apiService});
 
+  @override
   Future<Feed> fetchFeed() async {
     final endpoint = '/feeds/Aanbod.svc/json/$key/?type=koop&zo=/amsterdam/';
     final rawResult = await apiService.get(endpoint: endpoint);
