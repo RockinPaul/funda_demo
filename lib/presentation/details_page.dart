@@ -8,11 +8,10 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Feed')),
+      appBar: AppBar(title: Text('Details')),
       body: SafeArea(
         child: BlocBuilder<DetailsCubit, DetailsState>(
           builder: (context, state) {
@@ -29,29 +28,35 @@ class DetailsPage extends StatelessWidget {
                   .map(
                     (e) => CachedNetworkImage(
                       placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                          Center(child: CircularProgressIndicator()),
                       imageUrl: e,
                       fit: BoxFit.fitWidth,
                     ),
                   )
                   .toList();
 
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Carousel(
-                        itemBuilder: (context, index) =>
-                            images[index % images.length],
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: Carousel(
+                          itemBuilder: (context, index) =>
+                              images[index % images.length],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      child: Text(details.description,
-                          style: textTheme.bodyText1)),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
+                      child: Text(
+                        details.description,
+                        style: textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
             return Container();
