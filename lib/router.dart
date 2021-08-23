@@ -3,18 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funda_demo/blocs/details_cubit/details_cubit.dart';
 import 'package:funda_demo/blocs/feed_cubit/feed_cubit.dart';
 import 'package:funda_demo/domain/repositories/repository_base.dart';
+import 'package:funda_demo/injection_container.dart';
 import 'package:funda_demo/presentation/feed_page.dart';
 import 'package:funda_demo/presentation/details_page.dart';
 
 /// Manage and provide the FeedCubit and DetailsCubit to the appropriate generated routes.
 class AppRouter {
-  final RepositoryBase repository;
   late final FeedCubit _feedCubit;
   late final DetailsCubit _detailsCubit;
 
-  AppRouter({required this.repository}) {
-    _feedCubit = FeedCubit(repository: repository);
-    _detailsCubit = DetailsCubit(repository: repository);
+  AppRouter() {
+    _feedCubit = FeedCubit(repository: sl());
+    _detailsCubit = DetailsCubit(repository: sl());
   }
 
   MaterialPageRoute onGenerateRoute(String? routeName) {

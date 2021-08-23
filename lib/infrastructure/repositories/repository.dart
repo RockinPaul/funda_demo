@@ -10,14 +10,14 @@ import 'package:funda_demo/infrastructure/services/service_bundle.dart';
 
 class Repository extends RepositoryBase {
 
-  final RemoteDataSourceBase apiService;
+  final RemoteDataSourceBase remoteDataSource;
 
-  Repository({required this.apiService});
+  Repository({required this.remoteDataSource});
 
   @override
   Future<Feed> fetchFeed() async {
     final endpoint = '/feeds/Aanbod.svc/json/$key/?type=koop&zo=/amsterdam/';
-    final rawResult = await apiService.get(endpoint: endpoint);
+    final rawResult = await remoteDataSource.get(endpoint: endpoint);
     // Perform expensive computations in the background.
     return await compute(feedDtoFromJson, rawResult);
   }
@@ -25,7 +25,7 @@ class Repository extends RepositoryBase {
   @override
   Future<Details> retrieveDetails(FeedItem object) async {
     final endpoint = '/feeds/Aanbod.svc/json/detail/$key/koop/${object.itemId}/';
-    final rawResult = await apiService.get(endpoint: endpoint);
+    final rawResult = await remoteDataSource.get(endpoint: endpoint);
     // Perform expensive computations in the background.
     return await compute(detailsDtoFromJson, rawResult);
   }
