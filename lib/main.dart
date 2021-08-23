@@ -8,17 +8,17 @@ import 'package:funda_demo/router.dart';
 import 'domain/data_sources/remote_data_source_base.dart';
 import 'domain/repositories/repository_base.dart';
 import 'infrastructure/repositories/repository.dart';
+import 'injection_container.dart' as di;
 
 void main() async {
   // The Flutter framework catches errors that occur during callbacks triggered by the framework itself,
   // including errors encountered during the build, layout, and paint phases.
   // Errors that don’t occur within Flutter’s callbacks can’t be caught by the framework,
   // but can be handled by setting up a Zone.
-  runZonedGuarded(() {
+  runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
-
-    final _apiService = ApiService(baseUrl);
-    final _repository = Repository(apiService: _apiService);
+    // We don't want the UI to be built up before any of the dependencies had a chance to be registered.
+    await di.init();
 
     FlutterError.onError = (FlutterErrorDetails details) {
       if (kReleaseMode) {
@@ -31,39 +31,20 @@ void main() async {
       }
     };
     runApp(
-      App(
-        repository: _repository,
-        remoteDataSource: _apiService,
-      ),
+      App(),
     );
   }, (Object error, StackTrace stack) {
     reportError(error, stack);
   });
 }
 
-/// RepositoryBase and RemoteDataSourceBase are injectable for better testability.
 class App extends StatefulWidget {
-  final RepositoryBase repository;
-  final RemoteDataSourceBase remoteDataSource;
-
-  const App({
-    Key? key,
-    required this.repository,
-    required this.remoteDataSource,
-  }) : super(key: key);
-
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  late final AppRouter _router;
-
-  @override
-  void initState() {
-    super.initState();
-    _router = AppRouter(repository: widget.repository);
-  }
+  final AppRouter _router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
