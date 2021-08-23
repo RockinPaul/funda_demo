@@ -8,16 +8,17 @@ import '../fixtures/fixture_reader.dart';
 import 'remote_data_source_test.mocks.dart';
 
 final baseUrl = 'http://partnerapi.funda.nl';
+final endpoint = '/feeds/Aanbod.svc/json/ac1b0b1572524640a0ecc54de453ea9f/?type=koop&zo=/amsterdam/';
 
 // Generate a MockClient using the Mockito package.
 // Create new instances of this class in each test.
 @GenerateMocks([http.Client])
 void main() {
   group('get', () {
+
     test('should perform a GET request on a given URL', () async {
       final client = MockClient();
       final apiService = ApiService(client: client);
-      final endpoint = '/feeds/Aanbod.svc/json/ac1b0b1572524640a0ecc54de453ea9f/?type=koop&zo=/amsterdam/';
       // Use Mockito to return a successful response when it calls the
       // provided http.Client.
       when(client
@@ -30,16 +31,16 @@ void main() {
       verify(client.get(Uri.parse('$baseUrl$endpoint')));
     });
 
-    test('throws an exception if the http call completes with an error', () {
+    test('should throws an exception if the http call completes with an error', () {
       final client = MockClient();
-
+      final apiService = ApiService(client: client);
       // Use Mockito to return an unsuccessful response when it calls the
       // provided http.Client.
       when(client
-          .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1')))
+          .get(any))
           .thenAnswer((_) async => http.Response('Not Found', 404));
 
-      // expect(fetchAlbum(client), throwsException);
+      expect(apiService.get(endpoint: '$baseUrl$endpoint'), throwsException);
     });
   });
 }
