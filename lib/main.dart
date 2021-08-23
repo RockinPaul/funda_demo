@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:funda_demo/infrastructure/services/service_bundle.dart';
 import 'package:funda_demo/theme.dart';
 import 'package:funda_demo/router.dart';
-import 'domain/data_sources/remote_data_source_base.dart';
-import 'domain/repositories/repository_base.dart';
-import 'infrastructure/repositories/repository.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -16,8 +13,7 @@ void main() async {
   // Errors that don’t occur within Flutter’s callbacks can’t be caught by the framework,
   // but can be handled by setting up a Zone.
   runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    // We don't want the UI to be built up before any of the dependencies had a chance to be registered.
+    // Service locator initialization for some loose coupling.
     await di.init();
 
     FlutterError.onError = (FlutterErrorDetails details) {
@@ -30,9 +26,7 @@ void main() async {
         FlutterError.dumpErrorToConsole(details);
       }
     };
-    runApp(
-      App(),
-    );
+    runApp(App());
   }, (Object error, StackTrace stack) {
     reportError(error, stack);
   });

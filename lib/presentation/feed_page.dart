@@ -41,6 +41,7 @@ class _FeedPageState extends State<FeedPage> {
 
               return ListView.separated(
                 itemCount: objects.length,
+                padding: EdgeInsets.only(top: 3),
                 separatorBuilder: (context, index) => const SizedBox(height: 3),
                 itemBuilder: (context, index) {
                   final object = objects[index];
